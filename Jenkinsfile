@@ -29,4 +29,23 @@ pipeline {
             }
         }
       }
+    post{
+        always{
+            echo "This is always run"
+        }
+        success{
+            echo "This is run only if successful"
+        }
+        failure{
+            echo "This is failure part"
+        }
+        unstable{
+            echo "This is unstable part"
+        }
+        changed{
+            echo "It is run only on any changes made to jenkins file"
+        }
+        
+        
+    }
 }
