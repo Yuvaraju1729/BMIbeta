@@ -12,7 +12,7 @@ pipeline {
         stage('SonarQube Analysis'){
             steps{
                 withSonarQubeEnv('sonarqube'){
-                    sh 'mvn sonar:sonar'
+                     sh 'mvn clean package sonar:sonar'
                 }
             }
         }
@@ -20,11 +20,13 @@ pipeline {
             steps{
                 echo "This is quality gate analysis"
                 script{
+                     timeout(time: 15, unit: 'MINUTES') {
                       // Just in case something goes wrong, pipeline will be killed after a timeout
                     def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
                     if (qg.status != 'OK') {
                         error "Pipeline aborted due to quality gate failure: ${qg.status}"
                     }
+                     }
                 }
             }
            
