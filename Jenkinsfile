@@ -16,21 +16,7 @@ pipeline {
                 }
             }
         }
-        stage("Quality Gate"){
-            steps{
-                echo "This is quality gate analysis"
-                script{
-                     timeout(time: 2, unit: 'MINUTES') {
-                      // Just in case something goes wrong, pipeline will be killed after a timeout
-                    def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
-                    if (qg.status != 'OK') {
-                        error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                    }
-                     }
-                }
-            }
-           
-        }
+        
         stage('Pushing to Nexus'){
             steps{
              nexusArtifactUploader artifacts: [[artifactId: 'BMI', classifier: 'BMI Calculator Application', file: 'pom.xml', type: 'war']], credentialsId: 'nexus-credentialss', groupId: 'comrades.bmi', nexusUrl: '18.224.155.110:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'devopstraining', version: 'BMI-4.0'
