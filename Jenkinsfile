@@ -12,6 +12,7 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
+    }/*
         stage('SonarQube Analysis'){
             steps{
                withSonarQubeEnv('sonarqube'){
@@ -62,14 +63,14 @@ pipeline {
             }
         }
         
-        /*stage('Deployment to AWS'){
+        stage('Deployment to AWS'){
             steps{
             withCredentials([usernamePassword(credentialsId: 'tomcatCredentials', passwordVariable: 'password', usernameVariable: 'username'),string(credentialsId: 'TOMCAT_URL', variable: 'tomcat_url')]){
                     sh 'curl ${tomcat_url}/manager/text/undeploy?path=/BMI -u ${username}:${password}'
                     sh 'curl -v -u ${username}:${password} -T target/BMI${BUILD_NUMBER}.war ${tomcat_url}/manager/text/deploy?path=/BMI'
                 }
             }
-        }*/
+        }
         
      }
                post { 
@@ -84,3 +85,4 @@ pipeline {
                }
 
 }
+*/
